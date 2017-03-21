@@ -1,111 +1,93 @@
 package com.maxplus1.demo.utils;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESKeySpec;
-import javax.crypto.spec.IvParameterSpec;
+import org.apache.commons.codec.binary.Base64;
+
 import java.security.Key;
-import java.security.spec.AlgorithmParameterSpec;
+import java.security.SecureRandom;
 
-/**
- * Created by xiaolong.qiu on 2017/1/23.
- */
-public enum EncryptorUtils {
-    ;
-    public static final String ALGORITHM_DES = "DES/CBC/PKCS5Padding";
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
-    /**
-     * DES算法，加密
-     *
-     * @param data 待加密字符串
-     * @param key  加密私钥，长度不能够小于8位
-     * @return 加密后的字节数组，一般结合Base64编码使用
-     * @throws Exception
-     */
-    public static String encrypt(String key,String data) {
-        if(data == null)
-            return null;
-        try{
-            DESKeySpec dks = new DESKeySpec(key.getBytes());
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            //key的长度不能够小于8位字节
-            Key secretKey = keyFactory.generateSecret(dks);
-            Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
-            IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
-            AlgorithmParameterSpec paramSpec = iv;
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey,paramSpec);
-            byte[] bytes = cipher.doFinal(data.getBytes());
-            return byte2hex(bytes);
-        }catch(Exception e){
-            e.printStackTrace();
-            return data;
-        }
+public class EncryptorUtils {
+    public static final String ALGORITHM = "AES";
+
+    public static byte[] decrypt(String key)  {
+        return Base64.decodeBase64(key);
     }
 
-    /**
-     * DES算法，解密
-     *
-     * @param data 待解密字符串
-     * @param key  解密私钥，长度不能够小于8位
-     * @return 解密后的字节数组
-     * @throws Exception 异常
-     */
-    public static String decrypt(String key,String data) {
-        if(data == null)
-            return null;
-        try {
-            DESKeySpec dks = new DESKeySpec(key.getBytes());
-            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-            //key的长度不能够小于8位字节
-            Key secretKey = keyFactory.generateSecret(dks);
-            Cipher cipher = Cipher.getInstance(ALGORITHM_DES);
-            IvParameterSpec iv = new IvParameterSpec("12345678".getBytes());
-            AlgorithmParameterSpec paramSpec = iv;
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, paramSpec);
-            return new String(cipher.doFinal(hex2byte(data.getBytes())));
-        } catch (Exception e){
-            e.printStackTrace();
-            return data;
-        }
+    public static String encrypt(byte[] key)  {
+        return Base64.encodeBase64String(key);
     }
 
-    /**
-     * 二行制转字符串
-     * @param b
-     * @return
-     */
-    private static String byte2hex(byte[] b) {
-        StringBuilder hs = new StringBuilder();
-        String stmp;
-        for (int n = 0; b!=null && n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0XFF);
-            if (stmp.length() == 1)
-                hs.append('0');
-            hs.append(stmp);
-        }
-        return hs.toString().toUpperCase();
+    public static byte[] decryptBASE64(String key) throws Exception {
+        return Base64.decodeBase64(key);
     }
 
-    private static byte[] hex2byte(byte[] b) {
-        if((b.length%2)!=0)
-            throw new IllegalArgumentException();
-        byte[] b2 = new byte[b.length/2];
-        for (int n = 0; n < b.length; n+=2) {
-            String item = new String(b,n,2);
-            b2[n/2] = (byte)Integer.parseInt(item,16);
-        }
-        return b2;
+    public static String encryptBASE64(byte[] key) throws Exception {
+        return Base64.encodeBase64String(key);
     }
+
+    private static Key toKey(byte[] key) throws Exception {
+        //DESKeySpec dks = new DESKeySpec(key);
+        //SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
+        //SecretKey secretKey = keyFactory.generateSecret(dks);
+
+        // 当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码
+        SecretKey secretKey = new SecretKeySpec(key, ALGORITHM);
+
+        return secretKey;
+    }
+
+    public static byte[] decrypt(byte[] data, String key) throws Exception {
+        Key k = toKey(decryptBASE64(key));
+
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, k);
+
+        return cipher.doFinal(data);
+    }
+
+    public static byte[] encrypt(byte[] data, String key) throws Exception {
+        Key k = toKey(decryptBASE64(key));
+        Cipher cipher = Cipher.getInstance(ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, k);
+
+        return cipher.doFinal(data);
+    }
+
+    public static String initKey() throws Exception {
+        return initKey(null);
+    }
+
+    public static String initKey(String seed) throws Exception {
+        SecureRandom secureRandom = null;
+
+        if (seed != null) {
+            secureRandom = new SecureRandom(decryptBASE64(seed));
+        } else {
+            secureRandom = new SecureRandom();
+        }
+
+        KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM);
+        kg.init(secureRandom);
+
+        SecretKey secretKey = kg.generateKey();
+
+        return encryptBASE64(secretKey.getEncoded());
+    }
+
 
     public static void main(String[] args) throws Exception {
         String[] vals = new String[]{"test1db","test1dbPass","test2db","test2dbPass"};
         for (String source : vals) {
             System.out.println("原文: " + source);
-            String key = "you need to set it in the yml/props";
-            String encryptData = encrypt(key, source);
+            String encryptData = encrypt(source.getBytes());
             System.out.println("加密后: " + encryptData);
-            String decryptData = decrypt(key, encryptData);
+            String decryptData = new String(decrypt(encryptData));
             System.out.println("解密后: " + decryptData);
         }
     }
+
 }

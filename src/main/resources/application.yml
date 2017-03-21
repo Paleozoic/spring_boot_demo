@@ -12,8 +12,8 @@ spring:
           name: test1db
           type: com.alibaba.druid.pool.DruidDataSource
           url: jdbc:mysql://192.168.1.19:3306/test1db?useUnicode=true&characterEncoding=UTF-8
-          username: ENC(459BCC4C51BB1DA4) #test1db
-          password: ENC(0883151783C641B7B8A4D55817A0337E) #test1dbPass
+          username: ENC(dGVzdDFkYg==) #test1db
+          password: ENC(dGVzdDFkYlBhc3M=) #test1dbPass
           driver-class-name: com.mysql.jdbc.Driver
           minIdle: 1
           maxActive: 2
@@ -28,8 +28,8 @@ spring:
           name: test2db
           type: com.alibaba.druid.pool.DruidDataSource
           url: jdbc:mysql://192.168.1.20:3306/test2db?useUnicode=true&characterEncoding=UTF-8
-          username: ENC(2E5190DA1CE37E6A) #test2db
-          password: ENC(7DB3746BEA9770B33CDEE7C3FDEEA661) #test2dbPass
+          username: ENC(dGVzdDJkYg==) #test2db
+          password: ENC(dGVzdDJkYlBhc3M=) #test2dbPass
           driver-class-name: com.mysql.jdbc.Driver
           minIdle: 1
           maxActive: 2

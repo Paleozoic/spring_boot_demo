@@ -16,7 +16,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = {"com.holmes.check_ledger.dao.test2db"}, sqlSessionFactoryRef = "test2dbSqlSessionFactory")
+@MapperScan(basePackages = {"com.maxplus1.demo.dao.test2db"}, sqlSessionFactoryRef = "test2dbSqlSessionFactory")
 public class Test2dbConfig {
 
     private final static Logger log = LoggerFactory.getLogger(Test2dbConfig.class);

@@ -8,14 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
-@ImportResource("classpath:spring/beans.xml")
+//@ImportResource("classpath:spring/beans.xml")
 public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-    private final static String KEY = "you need to set it in the yml/props";
 
 	@Bean("jasyptStringEncryptor")
 	public StringEncryptor stringEncryptor() {
@@ -23,13 +22,14 @@ public class DemoApplication {
         return new StringEncryptor() {
             @Override
             public String encrypt(String s) {
-                return EncryptorUtils.encrypt(s,KEY);
+                return EncryptorUtils.encrypt(s.getBytes());
             }
 
             @Override
             public String decrypt(String s) {
-                return EncryptorUtils.decrypt(s,KEY);
+                return new String(EncryptorUtils.decrypt(s));
             }
         };
 	}
+
 }
