@@ -24,7 +24,7 @@ public class Test2dbConfig {
     @Bean(name = "test2db")
     @ConfigurationProperties(prefix = "spring.datasource.test2db")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+        return new DruidDataSource();
     }
 
     @Bean(name = "test2dbTransactionManager")
