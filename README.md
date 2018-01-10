@@ -4,6 +4,7 @@
 - encypt/decypt props
 - log4j2 with yml settings 
 - swagger
+- redis
 
 > just a spring boot demo ~
 
