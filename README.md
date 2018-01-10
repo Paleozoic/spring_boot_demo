@@ -3,9 +3,13 @@
 - mybatis
 - encypt/decypt props
 - log4j2 with yml settings 
+- swagger
 
 > just a spring boot demo ~
 
 # druid
 druid config  [HERE](https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter)
 
+# swagger
+- (原生)http://localhost:9099/demo/swagger-ui.html
+- (美化)http://localhost:9099/demo/doc.html
