@@ -1,12 +1,12 @@
 package com.maxplus1.demo.config.datasource;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +22,9 @@ public class Test2dbConfig {
     private final static Logger log = LoggerFactory.getLogger(Test2dbConfig.class);
 
     @Bean(name = "test2db")
-    @ConfigurationProperties(prefix = "spring.datasource.test2db")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.test2db")
     public DataSource dataSource() {
-        return new DruidDataSource();
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "test2dbTransactionManager")
