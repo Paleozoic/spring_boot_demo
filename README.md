@@ -6,6 +6,6 @@
 
 > just a spring boot demo ~
 
-# bug
+# druid
 druid config  [HERE](https://github.com/alibaba/druid/tree/master/druid-spring-boot-starter)
 
