@@ -8,6 +8,7 @@ import com.maxplus1.demo.service.remote.ITest2Service;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +31,15 @@ public class Demo2Rest {
     @Resource
     private ITest2Service test2Service;
 
+    @Resource(name = "redisTemplate")
+    private ValueOperations<String,String> valueOperations;
+
 
     @GetMapping("demo")
     public void demo() {
         System.out.println(test1Service.getTest1(1l));
         System.out.println(test2Service.getTest2(2l));
+        System.out.println(valueOperations.get("XXX"));
     }
 
     @ApiOperation(value = "sayHi", notes = "根据名字say一下Hi")
