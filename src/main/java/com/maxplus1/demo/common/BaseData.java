@@ -5,11 +5,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class BaseData {
+public class BaseData<T> {
     private boolean success;
     private int code;
     private String msg;
-    private Object data;
+    private T data;
 
     public static BaseData success(Object obj){
         return new BaseData(true, HttpStatusCode.OK.getCode(),"操作成功",obj);
