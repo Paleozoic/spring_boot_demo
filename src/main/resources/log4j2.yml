@@ -28,7 +28,7 @@ Configuration:
       - name: ROLLING_FILE
         ignoreExceptions: false
         fileName: ${log.path}/${project.name}.log
-        filePattern: "${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+        filePattern: "${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"  # ${log.path}/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}.log 时间，按天归档日志
         PatternLayout:
           pattern: "%d{yyyy-MM-dd HH:mm:ss,SSS}:%4p %t (%F:%L) - %m%n"
         Policies:
