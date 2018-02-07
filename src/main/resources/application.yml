@@ -41,7 +41,12 @@ spring:
             username: ENC(cGFsZW8=) #paleo
             password: ENC(cGFsZW8=) #paleo
 
-
+pagehelper:
+  helperDialect: mysql
+  pageSizeZero: true
+  rowBoundsWithCount: true
+  offsetAsPageNum: true
+  supportMethodsArguments: true
 
 
 #mybatis:
