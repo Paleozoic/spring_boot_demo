@@ -69,6 +69,20 @@
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 
+
+		<!-- excel操作 -->
+		<dependency>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+		<!-- POI依赖 -->
+		<dependency>
+			<groupId>org.jxls</groupId>
+			<artifactId>jxls-poi</artifactId>
+			<version>1.0.14</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-redis</artifactId>
