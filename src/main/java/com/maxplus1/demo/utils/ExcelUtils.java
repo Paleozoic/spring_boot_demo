@@ -37,10 +37,14 @@ public class ExcelUtils {
 
         try(InputStream is = ExcelUtils.class.getResourceAsStream("files/excel_templ/object_collection_template.xls")) {
             /**
-             * 这里是输出到文件。
+             * 这里是输出到文件。输出到文件可以存档，输出到浏览器则少了一步文件处理，省事，但没存档。
              * 可以直接输出到浏览器：
              * HttpServletResponse res = ……
              * OutputStream os = res.getOutputStream();
+             * DateTime now = DateTime.now(TimeZone.getDefault());
+             * // 设置文件名
+             * res.setHeader("content-disposition", "attachment;filename="
+                  + URLEncoder.encode("客户列表-"+now.format("YYYYMMDD")+".xls", "UTF-8"));
              * // ……
              * JxlsHelper.getInstance().processTemplate(is, os, context);
              */
