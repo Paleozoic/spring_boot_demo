@@ -1,91 +1,98 @@
 package com.maxplus1.demo.utils;
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.security.Key;
-import java.security.SecureRandom;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 public class EncryptorUtils {
-    public static final String ALGORITHM = "AES";
 
-    public static byte[] decrypt(String key)  {
-        return Base64.decodeBase64(key);
-    }
-
-    public static String encrypt(byte[] key)  {
-        return Base64.encodeBase64String(key);
-    }
-
-    public static byte[] decryptBASE64(String key) throws Exception {
-        return Base64.decodeBase64(key);
-    }
-
-    public static String encryptBASE64(byte[] key) throws Exception {
-        return Base64.encodeBase64String(key);
-    }
-
-    private static Key toKey(byte[] key) throws Exception {
-        //DESKeySpec dks = new DESKeySpec(key);
-        //SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(ALGORITHM);
-        //SecretKey secretKey = keyFactory.generateSecret(dks);
-
-        // 当使用其他对称加密算法时，如AES、Blowfish等算法时，用下述代码替换上述三行代码
-        SecretKey secretKey = new SecretKeySpec(key, ALGORITHM);
-
-        return secretKey;
-    }
-
-    public static byte[] decrypt(byte[] data, String key) throws Exception {
-        Key k = toKey(decryptBASE64(key));
-
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, k);
-
-        return cipher.doFinal(data);
-    }
-
-    public static byte[] encrypt(byte[] data, String key) throws Exception {
-        Key k = toKey(decryptBASE64(key));
-        Cipher cipher = Cipher.getInstance(ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, k);
-
-        return cipher.doFinal(data);
-    }
-
-    public static String initKey() throws Exception {
-        return initKey(null);
-    }
-
-    public static String initKey(String seed) throws Exception {
-        SecureRandom secureRandom = null;
-
-        if (seed != null) {
-            secureRandom = new SecureRandom(decryptBASE64(seed));
-        } else {
-            secureRandom = new SecureRandom();
+    /**
+     * 防止byte[] String互转发生变化
+     */
+    public final static String DEFAULT_CHARCODE = "ISO-8859-1";
+    /**
+     * 加密
+     *
+     * @param content  需要加密的内容
+     * @param password 加密密码
+     * @return
+     */
+    public static byte[] encrypt(String content, String password) {
+        KeyGenerator kgen = null;
+        try {
+            kgen = KeyGenerator.getInstance("AES");
+            kgen.init(128, new SecureRandom(password.getBytes()));
+            SecretKey secretKey = kgen.generateKey();
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+            cipher.init(Cipher.ENCRYPT_MODE, key);// 初始化
+            byte[] byteContent = content.getBytes("utf-8");
+            byte[] result = cipher.doFinal(byteContent);
+            return result;//加密
+        } catch (NoSuchAlgorithmException | InvalidKeyException
+                | NoSuchPaddingException | BadPaddingException
+                | UnsupportedEncodingException | IllegalBlockSizeException e) {
+            e.printStackTrace();
         }
-
-        KeyGenerator kg = KeyGenerator.getInstance(ALGORITHM);
-        kg.init(secureRandom);
-
-        SecretKey secretKey = kg.generateKey();
-
-        return encryptBASE64(secretKey.getEncoded());
+        return null;
     }
 
+    /**
+     * 解密
+     *
+     * @param content  待解密内容
+     * @param password 解密密钥
+     * @return
+     */
+    public static byte[] decrypt(byte[] content, String password) {
+        KeyGenerator kgen = null;
+        try {
+            kgen = KeyGenerator.getInstance("AES");
+            kgen.init(128, new SecureRandom(password.getBytes()));
+            SecretKey secretKey = kgen.generateKey();
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES");// 创建密码器
+            cipher.init(Cipher.DECRYPT_MODE, key);// 初始化
+            byte[] result = cipher.doFinal(content);
+            return result; // 解密
+        } catch (NoSuchAlgorithmException | BadPaddingException
+                | IllegalBlockSizeException | NoSuchPaddingException
+                | InvalidKeyException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public static String decryptBase64(String content, String password){
+        //Base64解码
+        byte[] decode = Base64.getDecoder().decode(content);
+        return new String(decrypt(decode,password));
+
+    }
+
+
+    public static String encryptBase64(String content, String password){
+        byte[] encrypt = encrypt(content, password);
+        // Base64编码
+        String encryptStr = Base64.getEncoder().encodeToString(encrypt);
+        return encryptStr;
+
+    }
 
     public static void main(String[] args) throws Exception {
         String[] vals = new String[]{"test1db","test1dbPass","test2db","test2dbPass"};
         for (String source : vals) {
             System.out.println("原文: " + source);
-            String encryptData = encrypt(source.getBytes());
+            String encryptData = new String(encrypt(source,"passwordpassword"),DEFAULT_CHARCODE);
             System.out.println("加密后: " + encryptData);
-            String decryptData = new String(decrypt(encryptData));
+            String decryptData = new String(decrypt(encryptData.getBytes(DEFAULT_CHARCODE),"passwordpassword"));
             System.out.println("解密后: " + decryptData);
         }
     }
