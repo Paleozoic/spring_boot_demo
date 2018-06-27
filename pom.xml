@@ -155,6 +155,30 @@
 			<classifier>sources</classifier>
 		</dependency>
 
+		<!-- Mail -->
+		<dependency>
+			<groupId>com.jcabi</groupId>
+			<artifactId>jcabi-email</artifactId>
+			<version>1.10</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>aspectjrt</artifactId>
+					<groupId>org.aspectj</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mailapi</artifactId>
+			<version>1.4.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.5.0-b01</version>
+			<scope>runtime</scope>
+		</dependency>
 		<!-- dev tools -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
