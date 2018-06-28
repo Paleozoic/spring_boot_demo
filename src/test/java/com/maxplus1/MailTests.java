@@ -57,7 +57,7 @@ public class MailTests {
 			log.error("[ERROR===>>>]无法连接邮件服务器！", e);
 			throw new RuntimeException("[ERROR===>>>]无法连接邮件服务器！", e);
 		}
-		for (MailUser recipient : mail.getRecipientList()) {
+		for (MailUser recipient : mail.getRecipientList()) {//每人发一封
 
 			try {
 				/**
@@ -71,6 +71,16 @@ public class MailTests {
 						.with(new StSubject("主题"))
 						.with(new EnPlain(mail.getMailContent().getMailMontent()));
 
+				/**
+				 * TODO
+				 * 群发 mime = mime.with(new StRecipient("收件人姓名", "收件人地址"))
+				 * 			       .with(new StRecipient("收件人姓名", "收件人地址"))
+			     * 抄送	 mime = mime.with(new StCc("收件人姓名", "收件人地址"))
+				 * 			       .with(new StCc("收件人姓名", "收件人地址"))
+				 * 密送	 mime = mime.with(new StBcc("收件人姓名", "收件人地址"))
+				 * 			       .with(new StBcc("收件人姓名", "收件人地址"))
+				 *
+				 */
 				List<MailFile> mailFileList = mail.getMailFileList();
 
 				for (MailFile mailFile : mailFileList) {
