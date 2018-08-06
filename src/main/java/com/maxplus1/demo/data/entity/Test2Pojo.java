@@ -1,4 +1,4 @@
-package com.maxplus1.demo.entity;
+package com.maxplus1.demo.data.entity;
 
 /**
  * Created by xiaolong.qiu on 2017/1/23.

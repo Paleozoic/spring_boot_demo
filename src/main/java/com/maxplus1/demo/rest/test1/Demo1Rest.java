@@ -3,7 +3,7 @@ package com.maxplus1.demo.rest.test1;
 import com.maxplus1.demo.common.BaseData;
 import com.maxplus1.demo.common.ctrl.CtrlOpt;
 import com.maxplus1.demo.config.swagger.Const;
-import com.maxplus1.demo.entity.Test1Pojo;
+import com.maxplus1.demo.data.entity.Test1Pojo;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

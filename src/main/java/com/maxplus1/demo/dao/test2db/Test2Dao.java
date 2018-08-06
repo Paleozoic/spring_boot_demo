@@ -1,6 +1,6 @@
 package com.maxplus1.demo.dao.test2db;
 
-import com.maxplus1.demo.entity.Test2Pojo;
+import com.maxplus1.demo.data.entity.Test2Pojo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

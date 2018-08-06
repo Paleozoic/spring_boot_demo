@@ -1,6 +1,6 @@
-package com.maxplus1.demo.service.remote;
+package com.maxplus1.demo.data.remote;
 
-import com.maxplus1.demo.entity.Test1Pojo;
+import com.maxplus1.demo.data.entity.Test1Pojo;
 
 /**
  * Created by xiaolong.qiu on 2017/1/19.
