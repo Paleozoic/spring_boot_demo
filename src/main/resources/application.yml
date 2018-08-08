@@ -40,7 +40,7 @@ spring:
             url: jdbc:mysql://192.168.186.0.104:3306?useUnicode=true&characterEncoding=UTF-8
             username: ENC(mKWCEjYz4siTi5L47p1YmA===) #paleo
             password: ENC(mKWCEjYz4siTi5L47p1YmA===) #paleo
-  freemarker:
+  freemarker: # 更多配置见：FreeMarkerProperties
     allow-request-override: false # Whether HttpServletRequest attributes are allowed to override (hide) controller generated model attributes of the same name.
     allow-session-override: false # Whether HttpSession attributes are allowed to override (hide) controller generated model attributes of the same name.
     cache: false # Whether to enable template caching.
@@ -58,7 +58,8 @@ spring:
     suffix: .ftl # Suffix that gets appended to view names when building a URL.
     template-loader-path: classpath:/templates/ # Comma-separated list of template paths.
     # view-names:  # White list of view names that can be resolved.
-
+  flyway:
+    locations: classpath:db/migration,filesystem:/opt/migration # 更多配置见FlywayProperties
 
 pagehelper:
   helperDialect: mysql
