@@ -58,8 +58,8 @@ spring:
     suffix: .ftl # Suffix that gets appended to view names when building a URL.
     template-loader-path: classpath:/templates/ # Comma-separated list of template paths.
     # view-names:  # White list of view names that can be resolved.
-  flyway:
-    locations: classpath:db/migration,filesystem:/opt/migration # 更多配置见FlywayProperties
+  flyway: # 更多配置见FlywayProperties
+    locations: classpath:db/migration,filesystem:/opt/migration
 
 pagehelper:
   helperDialect: mysql
