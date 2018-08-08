@@ -9,10 +9,10 @@ public class EncryptConfig {
 
 
 
-    @Bean("basicTextEncryptor")
-    public BasicTextEncryptor basicTextEncryptor() {
-        return new BasicTextEncryptor();
-    }
+//    @Bean("basicTextEncryptor")
+//    public BasicTextEncryptor basicTextEncryptor() {
+//        return new BasicTextEncryptor();
+//    }
 
 
     public static void main(String[] args) throws Exception{
