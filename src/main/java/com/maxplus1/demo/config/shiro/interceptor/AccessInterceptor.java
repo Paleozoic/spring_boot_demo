@@ -1,7 +1,7 @@
 package com.maxplus1.demo.config.shiro.interceptor;
 
 
-import com.maxplus1.demo.config.shiro.rbac.IMenuService;
+import com.maxplus1.demo.config.shiro.rbac.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;

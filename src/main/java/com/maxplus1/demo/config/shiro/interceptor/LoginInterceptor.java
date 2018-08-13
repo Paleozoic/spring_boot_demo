@@ -2,7 +2,7 @@ package com.maxplus1.demo.config.shiro.interceptor;
 
 
 import com.maxplus1.demo.config.shiro.rbac.AccountUtils;
-import com.maxplus1.demo.config.shiro.rbac.IUserService;
+import com.maxplus1.demo.config.shiro.rbac.service.IUserService;
 import com.maxplus1.demo.config.shiro.rbac.User;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;

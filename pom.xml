@@ -24,6 +24,8 @@
 
 		<toolsjar>${env.JAVA_HOME}/lib/tools.jar</toolsjar>
 		<jconsolejar>${env.JAVA_HOME}/lib/jconsole.jar</jconsolejar>
+
+        <weixin-sdk.version>0.9.6</weixin-sdk.version>
 	</properties>
 
 	<dependencies>
@@ -143,6 +145,13 @@
 			<version>1.0.14</version>
 		</dependency>
 
+
+        <!-- 微信小程序 -->
+        <dependency>
+            <groupId>cn.com.riversoft</groupId>
+            <artifactId>weixin-app</artifactId>
+            <version>${weixin-sdk.version}</version>
+        </dependency>
 
 		<!-- 常用工具类 -->
 		<dependency>

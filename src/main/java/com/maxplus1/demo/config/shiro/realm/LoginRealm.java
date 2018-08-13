@@ -2,6 +2,9 @@ package com.maxplus1.demo.config.shiro.realm;
 
 
 import com.maxplus1.demo.config.shiro.rbac.*;
+import com.maxplus1.demo.config.shiro.rbac.service.IMenuService;
+import com.maxplus1.demo.config.shiro.rbac.service.IRoleService;
+import com.maxplus1.demo.config.shiro.rbac.service.IUserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

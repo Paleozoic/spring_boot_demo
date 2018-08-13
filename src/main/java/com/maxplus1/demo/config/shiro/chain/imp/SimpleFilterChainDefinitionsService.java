@@ -7,7 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.maxplus1.demo.config.shiro.chain.remote.AbstractFilterChainDefinitionsService;
-import com.maxplus1.demo.config.shiro.rbac.IMenuService;
+import com.maxplus1.demo.config.shiro.rbac.service.IMenuService;
 import com.maxplus1.demo.config.shiro.rbac.Menu;
 import org.apache.commons.lang3.StringUtils;
 
